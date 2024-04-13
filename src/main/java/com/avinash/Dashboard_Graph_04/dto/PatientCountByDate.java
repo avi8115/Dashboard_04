@@ -14,6 +14,11 @@ public class PatientCountByDate {
         this.hospitalName = hospitalName;
         this.count = count;
     }
+	
+	public PatientCountByDate(LocalDate date,  Long count) {
+        this.date = date;
+        this.count = count;
+    }
 
     public LocalDate getDate() {
         return date;
