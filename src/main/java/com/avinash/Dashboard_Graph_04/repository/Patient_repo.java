@@ -30,3 +30,5 @@ public interface Patient_repo extends JpaRepository<Patient_model, Long> {
                                                                      @Param("endDate") LocalDate endDate,
                                                                      @Param("hospitalId") Long hospitalId);    
 }
+
+
