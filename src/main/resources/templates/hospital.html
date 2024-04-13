@@ -1,0 +1,304 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<title>Hospital</title>
+<link rel="stylesheet" th:href="@{/styles.css}">
+<script
+	src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.4/Chart.js"></script>
+
+
+</head>
+<body>
+	<div class="nunito-text">
+
+		<div class="right-card-container nunito-text">
+			<div id="head1">
+				<h1>Dashboard</h1>
+			</div>
+
+			<div id="para1">
+				<p>Welcome to our HMS Dashboard</p>
+			</div>
+
+		</div>
+
+		<button onclick="window.location.href='index.html'">Back to
+			Home</button>
+		<div id="myform">
+			<form id="data-form" action="/process-hospital-data" method="post"
+				class="horizontal-form">
+				<div class="form-group">
+					<label for="startDate">From:</label> <input type="date"
+						id="startDate" name="startDate" required>
+				</div>
+				
+				<div class="form-group">
+					<label for="endDate">To:</label> <input type="date" id="endDate"
+						name="endDate" required>
+				</div>
+				
+				<div class="form-group">
+					<select id="mode-select" name="mode">
+						<option value="">Select Mode</option>
+						<option value="Patient">Patient</option>
+						<option value="Doctor">Doctor</option>
+					</select>
+				</div>
+
+				<div class="form-group">
+					<select id="hospital-select">
+						<option value="">All Hospitals</option>
+						<th:block th:each="hospital : ${hospitals}">
+							<option th:value="${hospital.id}">[[${hospital.hospitalName}]]</option>
+						</th:block>
+					</select>
+						<input type="hidden" name="hospitalId" id="hospitalId">
+				</div>
+
+				
+			</form>
+
+		</div>
+
+
+		<div class="container nunito-text">
+			<div id="content101">
+				<div id="inner-content1">
+					<h3 id="inner-head">Hospital Statistics</h3>
+				</div>
+
+				<div id="inner-content1">
+					<p id="inner-para">OPD</p>
+					<h2 id="inner-head">152</h2>
+				</div>
+				<div id="inner-content1">
+					<p id="inner-para">IPD</p>
+					<h2 id="inner-head">2300</h2>
+				</div>
+				<div id="inner-content1">
+					<p id="inner-para">Emergency</p>
+					<h2 id="inner-head">667</h2>
+				</div>
+				<div id="inner-content1">
+					<p id="inner-para">Department</p>
+					<h2 id="inner-head">12</h2>
+				</div>
+
+			</div>
+
+
+		</div>
+		<div class="graph-div">
+			<div class="content-row">
+				<!-- ---------------------------------1st DIV Graph------------------------------------------------------------------------------>
+
+				<div id="content1">
+					<h3>Patient</h3>
+					<p>Pie Graph</p>
+					<br>
+					<div class="analytic-au-ck">
+						<canvas id="myChart-1" style="width: 100%; max-width: 600px"></canvas>
+					</div>
+
+				</div>
+				<!-- ---------------------------------2nd DIV Graph------------------------------------------------------------------------------>
+
+				<div id="content2">
+					<h3>Patient</h3>
+					<p>Bar Graph</p>
+					<br>
+					<div class="analytic-au-ck">
+						<canvas id="myChart-2" style="width: 100%; max-width: 600px"></canvas>
+					</div>
+
+				</div>
+
+
+
+			</div>
+			<!-- -----------------------------------------3rd DIV Graph------------------------------------------------------------------ -->
+			<div class="content-row-1">
+				<div id="content3">
+					<h3>Patient</h3>
+					<p>Line Graph</p>
+					<br>
+					<div class="analytic-au-ck">
+						<canvas id="myChart-3" style="width: 100%; max-width: 600px"></canvas>
+					</div>
+
+				</div>
+
+
+				<!-- ---------------------------4th DIV GRAPH--------------------------------------------------------- -->
+
+				<div id="content4">
+					<h3>Patient</h3>
+					<p>Line Graph</p>
+					<br>
+					<div class="analytic-au-ck">
+						<canvas id="myChart-4" style="width: 100%; max-width: 600px"></canvas>
+					</div>
+
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<script th:inline="javascript">
+	
+	document.addEventListener('DOMContentLoaded', function() {
+
+		  const startDateInput = document.getElementById('startDate');
+		  const endDateInput = document.getElementById('endDate');
+		  const hospitalSelect = document.getElementById('hospital-select');
+		  const modeSelect = document.getElementById('mode-select');
+		  const dynamicHeaders = document.querySelectorAll('h3:not(#inner-head)');
+		  const dataForm = document.getElementById('data-form');
+		  const hospitalIdInput = document.getElementById('hospitalId'); // Assuming hidden input
+		
+		  
+		  
+		  
+		  function updateHeadings() {
+		    const selectedMode = modeSelect.value;
+		    const prefix = selectedMode === 'Patient' ? 'Patient' : 'Doctor';
+		    dynamicHeaders.forEach(header => {
+		      if (header.textContent.includes('Patient') || header.textContent.includes('Doctor')) {
+		        header.textContent = header.textContent.replace(/Patient|Doctor/g, prefix);
+		      }
+		    });
+		  }
+		  
+		  
+		  modeSelect.addEventListener('change', () => {
+			    const selectedMode = modeSelect.value;
+			    const selectedHospitalId = hospitalSelect.value; // Get the selected hospital ID
+			    updateChartData(selectedMode, selectedHospitalId); // Pass both mode and hospital ID
+			    updateHeadings();
+			  });
+		  
+		  //Newly added for hospital
+		  hospitalSelect.addEventListener('change', function() {
+		    const selectedHospitalId = this.value;
+		    const selectedMode = modeSelect.value; // Get the selected mode
+		    updateChartData(selectedMode, selectedHospitalId); // Update chart with new hospital filter
+		  });
+		  
+		  dataForm.addEventListener('submit', async function(event) {
+			    event.preventDefault(); // Prevent default form submission behavior
+			    const selectedHospitalId = hospitalIdInput.value;
+			    const selectedMode = modeSelect.value;
+			    await updateChartData(selectedMode, selectedHospitalId); // Pass both mode and hospital ID
+			  });
+
+		  // Function to fetch data and populate chart
+			async function updateChartData(mode, hospitalId) {
+			  const startDate = document.getElementById('startDate').value;
+			  const endDate = document.getElementById('endDate').value;
+			
+			  if (!startDate || !endDate) {
+			    console.error("Start date and end date must be provided.");
+			    return; // Exit the function if dates are not provided
+			  }
+			
+			  // Construct the URL with query parameters for startDate, endDate, and hospitalId
+			  /* let url = `/api/${mode.toLowerCase()}s/count-by-hospital?startDate=${startDate}&endDate=${endDate}`;
+			  if (hospitalId) {
+			    url += `&hospitalId=${hospitalId}`; // Append hospitalId to the URL if provided
+			  } */
+			  const url = `/api/${mode.toLowerCase()}s/count-by-date?startDate=${startDate}&endDate=${endDate}&hospitalId=${hospitalId}`;
+
+			
+			  try {
+			    const response = await fetch(url);
+			    if (!response.ok) {
+			      throw new Error(`HTTP error! status: ${response.status}`);
+			    }
+			    const data = await response.json();
+			
+			    // Sort the data by date
+			    data.sort((a, b) => new Date(a.date) - new Date(b.date));
+			
+			    // Assuming 'data' is an array of objects with 'hospitalName' and 'patientCount' or 'doctorCount'
+			    const labels = data.map(entry => entry.hospitalName);
+			    // Use 'patientCount' or 'doctorCount' based on the mode
+			    const counts = data.map(entry => mode === 'Patient' ? entry.patientCount : entry.doctorCount);
+			
+			    // Use dates for X-axis labels if no hospital is selected
+			    createChart('myChart-1', 'line', labels, counts, mode);
+			    createChart('myChart-2', 'bar', labels, counts, mode);
+			    createChart('myChart-3', 'pie', labels, counts, mode);
+			    createChart('myChart-4', 'line', labels, counts, mode, true);
+			    // ... update other charts with dates
+			
+			  } catch (error) {
+			    console.error("Error fetching data:", error);
+			  }
+			}
+													
+		  const chartInstances = {};
+	  
+		  function createChart(canvasId, chartType, labels, counts, mode, isTension = false) {
+			    const ctx = document.getElementById(canvasId).getContext('2d');
+			    const backgroundColor = chartType === 'line' ? 'rgba(99, 211, 255, 0.2)' : 'rgba(255, 99, 132, 0.2)';
+			    const borderColor = chartType === 'line' ? 'rgba(99, 211, 255, 1)' : 'rgba(255, 99, 132, 1)';
+			    
+			    if (chartInstances[canvasId]) {
+			        chartInstances[canvasId].destroy(); 
+			      }
+			    
+			    const chart = new Chart(ctx, {
+			      type: chartType,
+			      data: {
+			        labels: labels,
+			        datasets: [{
+			          label: `${mode.charAt(0).toUpperCase() + mode.slice(1)} Count`,
+			          data: counts,
+			          backgroundColor: backgroundColor,
+			          borderColor: borderColor,
+			          borderWidth: 1,
+			          fill: chartType !== 'line', 
+			          lineTension: isTension ? 0.4 : 0 
+			        }]
+			      },
+			      options: {
+			    	  tooltips: {
+			    		    mode: 'point' 
+			    		  },
+			        scales: {
+			          yAxes: [{
+			            ticks: {
+			              beginAtZero: true
+			            }
+			          }]
+			        }
+			      }
+			    });
+			  }	
+	});
+	</script>
+
+	<!-- ----------------------------------------------------------------------------------------------------- -->
+
+	<script>
+		//This code is being used for fetching the hospital list and updating this hospital list in dropdown
+		fetchData("/hospitals") 
+		  .then(data => {
+		    const hospitalSelect = document.getElementById('hospital-select');
+		    hospitalSelect.innerHTML = "<option value=''>Select Hospital</option>";
+
+		    data.forEach(hospital => {
+		      const option = document.createElement('option');
+		      option.value = hospital.id;
+		      option.text = hospital.hospitalName;
+		      hospitalSelect.appendChild(option);
+		    });
+		  })
+		  .catch(error => {
+		    console.error("Error fetching hospitals:", error);
+		  });
+
+		</script>
+
+</body>
+</html>

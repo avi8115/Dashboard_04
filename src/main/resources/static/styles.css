@@ -1,0 +1,300 @@
+@charset "ISO-8859-1";
+
+
+.material-symbols-outlined {
+ 	 font-variation-settings:
+  		'FILL' 0,
+  		'wght' 400,
+  		'GRAD' 0,
+ 	    'opsz' 48;
+ 	    margin-left:280px;
+ 	  
+	}
+.material-symbols-outlined {
+  color: black;  /* Icon color is always black */
+  font-variation-settings:
+    'FILL' 0,
+    'wght' 400,
+    'GRAD' 0,
+    'opsz' 48;  /* Adjust size as needed */
+  margin-left: 280px;
+}
+
+.profile-card {
+  display: none;  /* Hide the pop-up card initially */
+  position: relative;  /* Position the pop-up card relative to the icon */
+  top: 100%;  /* Position the pop-up card below the icon */
+  right: 0;  /* Position the pop-up card to the right of the icon */
+  background-color: white;  /* Background color of the pop-up card */
+  padding: 10px;  /* Padding for the pop-up card content */
+  /* Add other styles for the pop-up card as needed */
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);  /* Add a slight shadow effect */
+}
+.profile-card.active {
+  display: block; /* Or 'flex', depending on your layout */
+  position: fixed;
+  z-index: 10;
+  top: 100%;  /* Adjust position as needed */
+  right: 0;
+}
+
+
+
+
+
+
+.dropdown {
+  position: relative;
+}
+
+
+.dropdown-content {
+  display: none;
+  position: absolute;
+  background-color: #f0f0f0; /* Change background color */
+  min-width: 100%; /* Set width of dropdown */
+  box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2); /* Add shadow */
+  z-index: 1;
+  color: #87A922;
+}
+
+.dropdown-content a {
+  color: #90D26D; /* Change text color */
+  padding: 12px 16px;
+  text-decoration: none;
+  display: block;
+}
+
+.dropdown:hover .dropdown-content {
+  display: block;
+}
+/* Include Material Icons font library if using the icons */
+
+.material-icons {
+  font-family: 'Material Icons'; /* You'll need to include the library */
+  font-weight: normal;
+  font-style: normal;
+  font-size: 24px;
+  line-height: 1;
+  letter-spacing: normal;
+  text-transform: none;
+  display: inline-block;
+  width: 1em;
+  height: 1em;
+  vertical-align: middle;
+  position: absolute;
+  right: 10px; /* Adjust position of dropdown icon */
+}
+
+
+
+.right-card-container{
+ margin-left:0;
+  padding: 10px;
+  display: flex;
+  flex-wrap: wrap;  /* Add this line */
+  justify-content: space-between;
+ 
+}
+#head1{
+	 align-items: flex-start;
+	margin-left: 0;		
+}
+
+#para1{
+	margin:5px;
+}
+#inner-para{
+	margin-left:100px;
+	
+
+}
+#inner-head{
+	margin:5px;
+	margin-left:100px;
+}
+.container{
+	display:flex;	
+}
+.h1-container {
+  padding: 0;  /* Adjust padding as needed */
+  margin: 0;          /* Remove default margin for better control */
+}
+
+.right-card-container {
+  margin-left: 10px;
+  padding: 10px;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+}
+#myform{
+	margin-left: 120px;
+}
+
+.horizontal-form {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.form-group {
+    display: flex;
+    flex-direction: column;
+    margin-right: 10px;
+}
+
+/* Adjust the width as needed or use media queries for responsiveness */
+.form-group label,
+.form-group input,
+.form-group select,
+.form-group button {
+    width: 150px; /* Example width, adjust as needed */
+}
+
+/* If you want the labels to be above the inputs/selects/buttons */
+.form-group label {
+    margin-bottom: 5px;
+}
+
+
+#content101{
+  text-align: center;
+  display:flex;
+  margin-left: 20px;
+  height: 100px;
+  width: 100%;
+  max-width: 100%;
+  background-color: white;
+  border-color: black;
+  border-radius: 25px;
+  padding: auto;
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.1);
+}
+.inner-content1{
+	flex:2;
+}
+
+#content1 {
+  position: relative;
+  flex: 1;  /* Add this line */
+  margin-left: 20px;
+  margin-right:10px;
+  height: 400px;
+  width: 440px;
+  max-width: 48%;
+  background-color: white;
+  border-color: black;
+  border-radius: 25px;
+  padding: 20px;
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.1);
+}
+
+#content2 {
+  position: relative;
+  flex: 1;  /* Add this line */
+  margin-left: 20px;
+  height: 400px;
+  width: 440px;
+  max-width: 48%;
+  background-color: white;
+  border-color: black;
+  border-radius: 25px;
+  padding: 20px;
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.1);
+}
+
+#content3 {
+  position: relative;
+  flex: 1;  /* Add trgb(255, 255, 255)ine */
+  margin-left: 20px;
+  margin-right:10px;
+  height: 400px;
+  width: 440px;
+  max-width: 50%;
+  background-color: white;
+  border-color: black;
+  border-radius: 25px;
+  padding: 20px;
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.1);
+}
+#content4 {
+  position: relative;
+  flex: 1;  /* Add this line */
+  margin-left: 20px;
+  height: 400px;
+  width: 440px;
+  max-width: 48%;
+  background-color: white;
+  border-color: black;
+  border-radius: 25px;
+  padding: 20px;
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.1);
+}
+.Graph-1{
+  position: absolute; /* Position the canvas absolutely */
+  top: 90px; /* Align the canvas to the top of #content1 */
+  left: 0; /* Align the canvas to the left of #content1 */
+  width: 100%; /* Make the canvas fill the width of #content1 */
+  height: 100%; /* Make the canvas fill the height of #content1 */
+}
+	
+
+
+.content-row {  /* Add this class */
+  display: flex;
+  margin-top: 20px;
+}
+.content-row-1{
+	display: flex;
+	margin-top: 20px;
+}
+.graph-div{
+	margin-left: 40px;
+}
+
+.analytic-data-group{
+	display:flex;
+}
+
+.analytic-au-data{
+	flex:1;	
+	padding: 8px;
+}
+.analytic-au-ck{
+	flex: 1;
+}
+.nunito-text {
+  font-family: "Nunito", sans-serif;
+  font-optical-sizing: auto;
+  font-weight: 100;
+  font-style: normal;
+}
+
+
+#sidebar {
+  margin-top: 0px;
+  width: 200px;
+  height: 860px;
+  max-height: 100%; /* Adjust this value as needed for your content */
+  float: left; /* Optional positioning, adjust as needed */
+  background-color: white;
+  border-color: black;
+  border-radius: 25px;
+  padding: 20px;
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.1);
+}
+
+#sidebar h2 {
+  margin-top: 0; /* Remove top margin for a cleaner look */
+}
+
+#sidebar ul {
+  list-style: none; /* Remove default bullet points */
+  padding: 0; /* Remove default padding */
+}
+
+#sidebar li {
+  margin-bottom: 5px; /* Add spacing between filter options */
+}
