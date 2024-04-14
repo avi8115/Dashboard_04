@@ -23,9 +23,9 @@ public interface Doctor_repo extends JpaRepository<Doctor_model, Long> {
      List<DoctorCountByDate> findDoctorCountByDateRange(@Param("startDate") LocalDate startDate,
                                                         @Param("endDate") LocalDate endDate);
     
-    @Query("SELECT new com.avinash.Dashboard_Graph_04.dto.DoctorCountByDate(d.date AS date, h.hospitalName AS hospitalName, COUNT(d) AS count) " +
+    @Query("SELECT new com.avinash.Dashboard_Graph_04.dto.DoctorCountByDate(h.hospitalName AS hospitalName, COUNT(d) AS count) " +
     	       "FROM Doctor_model d JOIN d.hospital h WHERE d.date BETWEEN :startDate AND :endDate " +
-    	       "AND h.id = :hospitalId GROUP BY d.date, h.hospitalName ORDER BY d.date ASC")
+    	       "AND h.id = :hospitalId GROUP BY h.hospitalName")
      List<DoctorCountByDate> findDoctorCountByDateRangeAndHospital(@Param("startDate") LocalDate startDate,
                                                                    @Param("endDate") LocalDate endDate,
                                                                    @Param("hospitalId") Long hospitalId);    

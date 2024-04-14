@@ -107,24 +107,31 @@ public class Home_controller {
 	        @RequestParam(required = false) Long hospitalId) {
 	    
 	    // Fetch and filter data based on mode, date range, and hospital
-	    if ("Patient".equals(mode)) {
-	        List<PatientCountByDate> patientData = (hospitalId != null) 
-	            ? patientService.getPatientCountByDateFiltered(startDate, endDate, hospitalId)
-	            : patientService.getPatientCountByDateFiltered(startDate, endDate);
-	        model.addAttribute("patientData", patientData);
-	    } else if ("Doctor".equals(mode)) {
-	        List<DoctorCountByDate> doctorData = (hospitalId != null) 
-	            ? doctorService.getDoctorCountByDateFiltered(startDate, endDate, hospitalId)
-	            : doctorService.getDoctorCountByDateFiltered(startDate, endDate);
-	        model.addAttribute("doctorData", doctorData);
-	    }
+		if ("Patient".equals(mode)) {
+		    List<PatientCountByDate> patientData;
+		    if (hospitalId != null) {
+		        patientData = patientService.getPatientCountByDateFiltered(startDate, endDate, hospitalId);
+		    } else {
+		        patientData = patientService.getPatientCountByDateFiltered(startDate, endDate);
+		    }
+		    model.addAttribute("patientData", patientData);
+		} else if ("Doctor".equals(mode)) {
+		    List<DoctorCountByDate> doctorData;
+		    if (hospitalId != null) {
+		        doctorData = doctorService.getDoctorCountByDateFiltered(startDate, endDate, hospitalId);
+		    } else {
+		        doctorData = doctorService.getDoctorCountByDateFiltered(startDate, endDate);
+		    }
+		    model.addAttribute("doctorData", doctorData);
+		}
+
 
 	    // Add attributes to the model to maintain state
 	    model.addAttribute("selectedStartDate", startDate);
 	    model.addAttribute("selectedEndDate", endDate);
 	    model.addAttribute("selectedMode", mode);
 	    model.addAttribute("selectedHospitalId", hospitalId);
-
+	    
 	    // Return the hospital view
 	    return "hospital";
 	}

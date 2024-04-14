@@ -10,8 +10,7 @@ public class DoctorCountByDate {
 
     // Constructor, getters, and setters
 
-    public DoctorCountByDate(LocalDate date, String hospitalName, Long count) {
-        this.date = date;
+    public DoctorCountByDate(String hospitalName, Long count) {
         this.hospitalName = hospitalName;
         this.count = count;
     }

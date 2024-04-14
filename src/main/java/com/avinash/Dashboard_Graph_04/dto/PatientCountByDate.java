@@ -9,8 +9,8 @@ public class PatientCountByDate {
     private Long count;
     
 
-	public PatientCountByDate(LocalDate date, String hospitalName, Long count) {
-        this.date = date;
+	public PatientCountByDate(String hospitalName, Long count) {
+
         this.hospitalName = hospitalName;
         this.count = count;
     }

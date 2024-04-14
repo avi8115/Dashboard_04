@@ -23,9 +23,9 @@ public interface Patient_repo extends JpaRepository<Patient_model, Long> {
                                                           @Param("endDate") LocalDate endDate);
     
     
-    @Query("SELECT new com.avinash.Dashboard_Graph_04.dto.PatientCountByDate(p.date AS date, h.hospitalName AS hospitalName, COUNT(p) AS count) " +
+    @Query("SELECT new com.avinash.Dashboard_Graph_04.dto.PatientCountByDate(h.hospitalName AS hospitalName, COUNT(p) AS count) " +
     	       "FROM Patient_model p JOIN p.hospital h WHERE p.date BETWEEN :startDate AND :endDate " +
-    	       "AND h.id = :hospitalId GROUP BY p.date, h.hospitalName ORDER BY p.date ASC")
+    	       "AND h.id = :hospitalId GROUP BY h.hospitalName")
      List<PatientCountByDate> findPatientCountByDateRangeAndHospital(@Param("startDate") LocalDate startDate,
                                                                      @Param("endDate") LocalDate endDate,
                                                                      @Param("hospitalId") Long hospitalId);    
